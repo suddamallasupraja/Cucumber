@@ -6,7 +6,7 @@ import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features= {".//Features//Pagination.feature"},
+@CucumberOptions(features= {".//Features//EntirePractise.feature"},
 				glue="stepDefinitions",
 				//features="@target/rerun.txt",
 				plugin= {"pretty","html:reports/myreport.html","json:reports/myreport.json","rerun:target/rerun.txt"},

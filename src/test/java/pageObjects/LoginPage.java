@@ -24,7 +24,7 @@ public class LoginPage extends BasePage
 		@FindBy(xpath="//a//span[text()='My Account']")
 		WebElement acc;
 		
-		@FindBy(xpath="//li//a[text()='Login']")
+		@FindBy(xpath="//li//a[@class='dropdown-item' and text()='Login']")
 		WebElement lg;
 		
 		public void mail(String ml)

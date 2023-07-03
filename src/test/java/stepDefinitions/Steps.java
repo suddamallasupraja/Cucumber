@@ -3,22 +3,27 @@ package stepDefinitions;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Array;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.Alert;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 import io.cucumber.java.After;
@@ -28,12 +33,17 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import junit.framework.Assert;
+import pageObjects.BlazedemoPage;
 import pageObjects.Broken_LinkPage;
 import pageObjects.DatePickerPage;
 import pageObjects.EntireAutomationPage;
+import pageObjects.Entire_Practise;
 import pageObjects.FlePage;
+import pageObjects.Frames;
 import pageObjects.LoginPage;
 import pageObjects.Mock_Page;
+import pageObjects.MouseOverPage;
+import pageObjects.MultipleBrowsersPage;
 import pageObjects.PaginationPage;
 import pageObjects.StaticTablePage;
 
@@ -53,6 +63,11 @@ public class Steps
 	StaticTablePage st;
 	Broken_LinkPage bp;
 	PaginationPage pp;
+	MouseOverPage mo;
+	Frames fm;
+	MultipleBrowsersPage mb;
+	BlazedemoPage bl;
+	Entire_Practise ep;
 @Before	
 public void setup()
 {
@@ -476,4 +491,252 @@ public void user_clicks_on_all_pages()
    }
 }
 
+//mouse over operations
+
+@When("user switch to innerframe")
+public void user_switch_to_innerframe() 
+{
+driver.switchTo().frame("iframeResult");
+}
+
+@Then("double click on copy text")
+public void double_click_on_copy_text() 
+{
+    mo=new MouseOverPage(driver);
+    mo.sclick();
+    mo.dclick();
+}
+
+//frames
+
+@When("user switch to frame and clicks on package")
+public void user_switch_to_frame_and_clicks_on_package() 
+{
+	fm=new Frames(driver);
+    driver.switchTo().frame("packageListFrame");
+    fm.packs();
+}
+
+@When("switch back from the frame")
+public void switch_back_from_the_frame() 
+{
+   driver.switchTo().defaultContent();
+}
+
+@When("switch to another frame and clicks on class")
+public void switch_to_another_frame_and_clicks_on_class() 
+{
+	fm=new Frames(driver);
+	driver.switchTo().frame("packageFrame");
+	fm.clay();
+	driver.switchTo().defaultContent();
+}
+
+@When("switch to another frame and clicks on search button")
+public void switch_to_another_frame_and_clicks_on_search_button() 
+{
+	fm=new Frames(driver);
+	driver.switchTo().frame("classFrame");
+	
+}
+
+@When("enter the data")
+public void enter_the_data() 
+{
+	fm=new Frames(driver);
+	fm.srch();
+}
+
+@Then("user able to see the data accordingly which he entered")
+public void user_able_to_see_the_data_accordingly_which_he_entered() 
+{
+	fm=new Frames(driver);
+	Actions as=new Actions(driver);
+	as.keyDown(Keys.ENTER).keyUp(Keys.ENTER).perform();
+	//as.sendKeys(Keys.ENTER).perform();
+	System.out.println("completed");
+}
+
+//multiple browsers
+
+@When("switch to another tab and open URL {string}")
+public void switch_to_another_tab_and_open_url(String string) 
+{
+   driver.switchTo().newWindow(WindowType.TAB);
+   driver.get(string);
+}
+@Then("capture all windowsids and switch back to amazon")
+public void capture_all_windowsids_and_switch_back_to_amazon()
+{
+	mb=new MultipleBrowsersPage(driver);
+   Set<String> webels= driver.getWindowHandles();
+   for(String id:webels)
+   {
+	 String title=driver.switchTo().window(id).getTitle();
+	   if(title.equals("Online Shopping site in India: Shop Online for Mobiles, Books, Watches, Shoes and More - Amazon.in"))
+	   {
+		   mb.search();
+	   }
+   }
+}
+
+//Blazedemo 
+
+/*	@When("user chooses the departure city as {string}")
+public void user_chooses_the_departure_city_as(String string)
+{
+   bl=new BlazedemoPage(driver); 
+   bl.departure(string);
+}
+
+@When("user chooses the destination city as {string}")
+public void user_chooses_the_destination_city_as(String string) 
+{
+	bl=new BlazedemoPage(driver); 
+	bl.destination(string);
+}
+
+@When("clicks on find flights")
+public void clicks_on_find_flights() 
+{
+	bl=new BlazedemoPage(driver); 
+	bl.find();
+}
+
+@When("user navigates to particular page")
+public void user_navigates_to_particular_page() 
+{
+	bl=new BlazedemoPage(driver);
+	String text=bl.ppage();
+	System.out.println(text);
+	if(text.equals("Flights from Mexico City to London:"))
+	{
+		Assert.assertTrue(true);
+	}
+	else
+	{
+		Assert.assertTrue(false);
+	}
+}
+
+@When("user navigates to back page and to front page")
+public void user_navigates_to_back_page_and_to_front_page() 
+{
+	
+	driver.navigate().back();
+	driver.navigate().forward();
+}
+
+@When("choose the flight which has lowest price")
+public void choose_the_flight_which_has_lowest_price() 
+{
+	bl=new BlazedemoPage(driver); 
+	int size=bl.sizz();
+	String[] ab=new String[5];
+	for(int i=1;i<=size;i++)
+	{
+		ab[i-1]=bl.sort(i).getText();
+	}
+	System.out.println(Arrays.toString(ab));
+	Arrays.sort(ab);
+	System.out.println(Arrays.toString(ab));
+	
+	for(int i=1;i<=size;i++)
+	{
+		if(ab[i].equals(bl.sort(i).getText()))
+		{
+			bl.fli(i).click();
+			break;
+		}
+	}
+}
+
+@When("check the field total cost")
+public void check_the_field_total_cost() 
+{
+	bl=new BlazedemoPage(driver); 
+	String txt=bl.text();
+	
+}
+
+@When("clicks on purchase flight button")
+public void clicks_on_purchase_flight_button() 
+{
+	bl=new BlazedemoPage(driver);  
+}
+
+@Then("user should navigate to purchase conformation page")
+public void user_should_navigate_to_purchase_conformation_page() 
+{
+	bl=new BlazedemoPage(driver); 
+}
+
+@Then("store the id")
+public void store_the_id() 
+{
+	bl=new BlazedemoPage(driver); 
+}	*/
+
+//Entire Practise
+
+@When("user clicks on destination of the week")
+public void user_clicks_on_destination_of_the_week() 
+{
+    ep=new Entire_Practise(driver);
+	ep.beach();
+}
+
+@When("user navigate to previous page")
+public void user_navigate_to_previous_page() 
+{
+	ep=new Entire_Practise(driver);
+	driver.navigate().back();
+	
+}
+
+@When("user chooses the departure city as {string}")
+public void user_chooses_the_departure_city_as(String string) 
+{
+	ep=new Entire_Practise(driver);
+	ep.from(string);
+}
+
+@When("user chooses the destination city as {string}")
+public void user_chooses_the_destination_city_as(String string) 
+{
+	ep=new Entire_Practise(driver);
+	ep.to(string);
+}
+
+@When("clicks on find flights")
+public void clicks_on_find_flights() 
+{
+	ep=new Entire_Practise(driver);
+	ep.submit();
+}
+
+@When("choose the flight which has lowest price")
+public void choose_the_flight_which_has_lowest_price()
+{
+	ep=new Entire_Practise(driver);
+	String[] arr=new String[5];
+	for(int i=1;i<=ep.sizz();i++)
+	{
+	WebElement pric=ep.lowestprice(i);
+	String number=pric.getText();
+	arr[i-1]=number;
+	}
+	System.out.println(Arrays.toString(arr));
+	Arrays.sort(arr);
+	System.out.println(Arrays.toString(arr));
+	for(int i=1;i<=ep.sizz();i++)
+	{
+		String pri=ep.lowestprice(i).getText();
+		if(arr[0].equals(pri))
+		{
+			ep.chose(i).click();
+			break;
+		}
+	}
+}
 }
