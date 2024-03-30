@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
-Test set: testRunner.TestRunner
+Test set: testRun.TestRunner
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 7.761 s <<< FAILURE! - in testRunner.TestRunner
-Title of your feature #3.  Time elapsed: 7.71 s  <<< FAILURE!
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 16.916 s <<< FAILURE! - in testRun.TestRunner
+Title of your feature #3.  Time elapsed: 16.15 s  <<< FAILURE!
 junit.framework.AssertionFailedError
 	at junit.framework.Assert.fail(Assert.java:55)
 	at junit.framework.Assert.assertTrue(Assert.java:22)

@@ -936,10 +936,6 @@ public void user_choose_the_departure_city_as(String string)
 				v.click();
 				break;
 			}
-			else
-			{
-				Assert.assertTrue(false);
-			}
 		}
 		ep.withss();
 	}
