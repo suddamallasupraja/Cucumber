@@ -37,4 +37,24 @@ public String siz()
 String value=si.getText();
 return value;
 }
+
+
+//pagination page
+@FindBy(xpath="//span//a[@class='s-pagination-item s-pagination-next s-pagination-button s-pagination-separator']")
+WebElement paginatn;
+
+@FindBy(xpath="//span[@class='s-pagination-strip']//span[@class='s-pagination-item s-pagination-disabled']")
+WebElement diff;
+
+public int iz()
+{
+	String a=diff.getText();
+	int ab= Integer.parseInt(a);
+	return ab;
+}
+
+public WebElement pagepage()
+{
+	return paginatn;
+}
 }

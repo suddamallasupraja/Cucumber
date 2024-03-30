@@ -36,6 +36,8 @@ import junit.framework.Assert;
 import pageObjects.BlazedemoPage;
 import pageObjects.Broken_LinkPage;
 import pageObjects.DatePickerPage;
+import pageObjects.Date_pick_page;
+import pageObjects.Dontbe_Panic;
 import pageObjects.EntireAutomationPage;
 import pageObjects.Entire_Practise;
 import pageObjects.FlePage;
@@ -68,6 +70,8 @@ public class Steps
 	MultipleBrowsersPage mb;
 	BlazedemoPage bl;
 	Entire_Practise ep;
+	Dontbe_Panic dbp;
+	Date_pick_page dpp;
 @Before	
 public void setup()
 {
@@ -92,7 +96,7 @@ public void user_launches_the_browser()
 {
 	//ChromeOptions co=new ChromeOptions();
 	//co.setHeadless(true);
-	bws=rb.getString("browser");
+bws=rb.getString("browser");
 	if(bws.equals("chrome"))
 	{
 		 driver=new ChromeDriver();
@@ -707,7 +711,7 @@ public void user_chooses_the_destination_city_as(String string)
 	ep=new Entire_Practise(driver);
 	ep.to(string);
 }
-
+												
 @When("clicks on find flights")
 public void clicks_on_find_flights() 
 {
@@ -739,4 +743,204 @@ public void choose_the_flight_which_has_lowest_price()
 		}
 	}
 }
+
+//Don't panic feature file
+
+@When("user clicks on destination page")
+public void user_clicks_on_destination_page() 
+{
+    dbp= new Dontbe_Panic(driver);
+    dbp.beaches();
+}
+
+@When("user naviagtes to respective page")
+public void user_naviagtes_to_respective_page() 
+{
+	String title=driver.getTitle();
+	System.out.println(title);
+}
+
+@When("revert back from that page")
+public void revert_back_from_that_page() 
+{
+	driver.navigate().back();
+	
+}
+
+@When("user choose the departure city as paris")
+public void user_choose_the_departure_city_as_paris() 
+{
+	dbp= new Dontbe_Panic(driver);
+	dbp.departure("Paris");
+}
+
+@When("user choose the destination city as london")
+public void user_choose_the_destination_city_as_london() 
+{
+	dbp= new Dontbe_Panic(driver);
+	dbp.destination("London");
+}
+
+@When("click on find flights")
+public void click_on_find_flights() 
+{
+	dbp= new Dontbe_Panic(driver);
+	dbp.flight();
+}
+
+@When("click on choose the flight which has lowest price")
+public void click_on_choose_the_flight_which_has_lowest_price() 
+{
+	dbp= new Dontbe_Panic(driver);
+	int siz=dbp.siiz();
+	System.out.println(siz);
+	
+	String[] ab=new String[5];
+	for(int i=1;i<=siz;i++)
+	{
+		String value=dbp.prise(i).getText();
+		ab[i-1]=value;
+	}
+	System.out.println(Arrays.toString(ab));
+	Arrays.sort(ab);
+	System.out.println(Arrays.toString(ab));
+	
+	for(int i=1;i<=siz;i++)
+	{
+	String value1=dbp.prise(i).getText();
+	System.out.println(value1);
+	if(ab[0].equals(value1))
+	//System.out.println(ab[0]);
+	{
+		System.out.println(ab[0]);
+		dbp.choosefl(i).click();
+		break;	
+	}
+	}
+}
+
+@When("click on purchase flight")
+public void click_on_purchase_flight()
+{
+	dbp= new Dontbe_Panic(driver);
+	dbp.pflit();
+}
+
+@Then("user should navigate to purchase confirmation page")
+public void user_should_navigate_to_purchase_confirmation_page() 
+{
+	String sucs=driver.getTitle();
+	System.out.println(sucs);
+	
+	
+}
+
+@Then("store the id")
+public void store_the_id() 
+{
+	dbp= new Dontbe_Panic(driver);
+	
+}
+
+//Pagination page
+
+@When("user clicks on all available pages")
+public void user_clicks_on_all_available_pages() throws InterruptedException 
+{
+  pp=new PaginationPage(driver);
+ 
+  pp.iz();
+  
+  for(int i=1;i<pp.iz();i++)
+  {
+	  pp.pagepage().click();
+	  Thread.sleep(15000);
+  }
+}
+
+//date_pick
+
+@When("user clicks on datefield")
+public void user_clicks_on_datefield()
+{
+	dpp=new Date_pick_page(driver);
+	dpp.clic();
+    
+}
+
+//@When("choose the {string} and {string} and {string}")
+//public void choose_the_and_and(String string, String string2, String string3) 
+//{
+//   dpp=new Date_pick_page(driver);
+//   
+//   for()
+//   {
+//	   for()
+//	   {
+//		   
+//	   }
+//   }
+//}
+
+@When("user switch to frame3")
+public void user_switch_to_frame3() {
+  fm=new Frames(driver);
+  WebElement we=fm.frames();
+  driver.switchTo().frame(we);
+  
+}
+
+@When("switch to inside frame")
+public void switch_to_inside_frame() throws InterruptedException {
+	fm=new Frames(driver);
+	WebElement wes=fm.iframes();
+	Thread.sleep(5000);
+	driver.switchTo().frame(wes);
+	
+	
+}
+
+@When("clicks on i am a human radio button")
+public void clicks_on_i_am_a_human_radio_button() {
+	fm=new Frames(driver);
+	fm.radi();
+	driver.switchTo().defaultContent();
+	WebElement we=fm.frames();
+	driver.switchTo().frame(we);
+	fm.sendkey();
+}
+
+@When("user clicks on all checkboxes")
+public void user_clicks_on_all_checkboxes() 
+{
+	fm=new Frames(driver);
+	List<WebElement> sel=fm.indexes();
+	for(WebElement sels:sel)
+	{
+		String val=sels.getText();
+		System.out.println(val);
+	}
+}
+
+@When("user choose the departure city as {string}")
+public void user_choose_the_departure_city_as(String string) 
+	{
+		ep=new Entire_Practise(driver);
+		ep.with();
+		List<WebElement> value=ep.withs();
+		for(WebElement v:value)
+		{
+			System.out.println(v.getText());
+			if(v.getText().equals("Mexico City"))
+			{
+				v.click();
+				break;
+			}
+			else
+			{
+				Assert.assertTrue(false);
+			}
+		}
+		ep.withss();
+	}
 }

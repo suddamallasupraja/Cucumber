@@ -35,6 +35,12 @@ WebElement price;
 @FindBy(xpath="//tbody//tr[1]//td[1]//input")
 WebElement choose;
 
+@FindBy(xpath="//select[@name='fromPort']")
+WebElement wit;
+
+@FindBy(xpath="//select[@name='fromPort']//option")
+List<WebElement> wits;
+
 public void beach()
 {
 	beach.click();
@@ -71,6 +77,21 @@ public int sizz()
 {
 	int value=siz.size();
 	return value;
+}
+
+public void with()
+{
+	wit.click();
+}
+
+public List<WebElement> withs()
+{
+	return wits;
+}
+
+public void withss()
+{
+	System.out.println(wit.getText());
 }
 
 //

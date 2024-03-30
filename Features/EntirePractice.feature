@@ -13,4 +13,9 @@ Feature: Title of your feature
     And clicks on find flights
     And choose the flight which has lowest price
 
-
+	@without
+	Scenario:
+		Given user launches the browser
+		And navigate to "https://blazedemo.com/"
+		When user choose the departure city as "Mexico City" 
+			
