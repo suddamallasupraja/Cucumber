@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: testRunner.TestRunner
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 7.761 s <<< FAILURE! - in testRunner.TestRunner
-Title of your feature #3.  Time elapsed: 7.71 s  <<< FAILURE!
-junit.framework.AssertionFailedError
-	at junit.framework.Assert.fail(Assert.java:55)
-	at junit.framework.Assert.assertTrue(Assert.java:22)
-	at junit.framework.Assert.assertTrue(Assert.java:31)
-	at stepDefinitions.Steps.user_choose_the_departure_city_as(Steps.java:941)
-	at ✽.user choose the departure city as "Mexico City"(file:///C:/Users/Kishore%20kumar%20Reddy/eclipse-workspace/Import/./Features/EntirePractice.feature:20)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.424 s - in testRunner.TestRunner

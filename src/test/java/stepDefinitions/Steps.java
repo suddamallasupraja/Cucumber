@@ -33,6 +33,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import junit.framework.Assert;
+import pageObjects.AmzPage;
 import pageObjects.BlazedemoPage;
 import pageObjects.Broken_LinkPage;
 import pageObjects.DatePickerPage;
@@ -72,6 +73,8 @@ public class Steps
 	Entire_Practise ep;
 	Dontbe_Panic dbp;
 	Date_pick_page dpp;
+	
+	AmzPage app;
 @Before	
 public void setup()
 {
@@ -939,4 +942,63 @@ public void user_choose_the_departure_city_as(String string)
 		}
 		ep.withss();
 	}
+
+//amazon feature
+
+
+@When("user search for facewash")
+public void user_search_for_facewash() throws InterruptedException {
+	app=new AmzPage(driver);
+   app.searchitem();
+   app.searchbotton();
+   Thread.sleep(1000);
+   app.choose();
+//   Set<String> we=driver.getWindowHandles();
+//   for(String a:we)
+//   {
+//	   driver.switchTo().window(a);
+//	   System.out.println(a);
+//   }
+   app.buy();
+}
+
+@When("user should be able to see the face wash page")
+public void user_should_be_able_to_see_the_face_wash_page() {
+    
+}
+
+@When("user clicks on {string}")
+public void user_clicks_on(String string) {
+    
+}
+
+@When("user should be able to see the face wash")
+public void user_should_be_able_to_see_the_face_wash() {
+  
+}
+
+@When("set the quantity to {string}")
+public void set_the_quantity_to(String string) {
+   
+}
+
+@When("click on buy now")
+public void click_on_buy_now() {
+    
+}
+
+@When("choose the payment method as other upi apps")
+public void choose_the_payment_method_as_other_upi_apps() {
+    
+}
+
+@When("place the order")
+public void place_the_order() {
+    
+}
+
+@Then("order should be placed")
+public void order_should_be_placed() {
+    
+}
 }
