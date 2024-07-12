@@ -14,4 +14,5 @@ Feature: Title of your feature
     And click on buy now
     And choose the payment method as other upi apps
     And place the order
+    But when you entered
     Then order should be placed
